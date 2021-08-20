@@ -139,8 +139,8 @@ impl ProxyChecker {
             let amount = proxies.len();
             let success = self.proxies.update_proxies(proxies).is_ok();
             proxy_log!(self.logger, success, "update", amount);
+            
+            return Ok(true);
         }
-
-        Ok(true)
     }
 }
