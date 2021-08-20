@@ -73,7 +73,7 @@ impl ProxyChecker {
         })
     }
 
-    pub fn update(&mut self) -> Result<(), types::AnyError> {
+    pub fn update(&mut self) -> Result<bool, types::AnyError> {
         let mut idx = 0;
 
         loop {
@@ -82,7 +82,7 @@ impl ProxyChecker {
             let entries: _ = self.proxies.after(idx, self.pcs.pagination)?;
 
             if entries.len() == 0 {
-                break;
+                return Ok(false);
             }
 
             // set idx
@@ -141,6 +141,6 @@ impl ProxyChecker {
             proxy_log!(self.logger, success, "update", amount);
         }
 
-        Ok(())
+        Ok(true)
     }
 }
