@@ -43,7 +43,7 @@ fn start_proxy_checker(pcs: ProxyCheckerSettings, logger: Logger) {
             let logger = cloned_logger.clone();
 
             match pc.update() {
-                Ok(_) => logger.log(Level::Info, "Successfully checked health of/updated the proxies!"),
+                Ok(b) => if b { logger.log(Level::Info, "Successfully checked health of/updated the proxies!") },
                 Err(why) => logger.log(Level::Error,
                     &format!("ProxyChecker/Error: {}", why))
             }
