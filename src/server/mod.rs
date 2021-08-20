@@ -31,13 +31,6 @@ pub fn get_state(token: &str)
     Ok(man.get_state(token))
 }
 
-fn register_catchers(r: rocket::Rocket) -> rocket::Rocket {
-    r.register(catchers![catchers::bad_request])
-        .register(catchers![catchers::unauthorized])
-        .register(catchers![catchers::server_error])
-        .register(catchers![catchers::ok])
-}
-
 pub fn start() {
     let proxy_routes = routes![bip::bulk_insert_proxies, gp::get_proxy];
     let rl_routes = routes![arp::add_ratelimited];
@@ -49,5 +42,5 @@ pub fn start() {
         .mount("/ratelimited", rl_routes)
         .mount("/managers", manager_routes);
 
-    register_catchers(endpoints).launch();
+    endpoints.launch();
 }
